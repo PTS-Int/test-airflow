@@ -11,7 +11,7 @@ default_args = {
 }
 
 with DAG(
-    dag_id='test_etl_dag_v02',
+    dag_id='test_etl_dag_v03',
     default_args=default_args,
     start_date=datetime(2023, 3, 2),
     schedule_interval='@daily'
@@ -22,6 +22,7 @@ with DAG(
         image_pull_secrets=[k8s.V1LocalObjectReference("regcred")],
         # cmds=["bash", "-cx"],
         # arguments=["echo", "10", "echo pwd"],
+        is_delete_operator_pod=False,
         configmaps=["dev-configmap-accounting-tnanalytics"],
         labels={"foo": "bar"},
         name="test_etl_extract",
@@ -36,6 +37,7 @@ with DAG(
         image_pull_secrets=[k8s.V1LocalObjectReference("regcred")],
         # cmds=["bash", "-cx"],
         # arguments=["echo", "10", "echo pwd"],
+        is_delete_operator_pod=False,
         configmaps=["dev-configmap-accounting-tnanalytics"],
         labels={"foo": "bar"},
         name="test_etl_transform",
