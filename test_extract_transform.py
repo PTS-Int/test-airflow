@@ -11,9 +11,9 @@ default_args = {
 }
 
 with DAG(
-    dag_id='test_etl_dag_v01',
+    dag_id='test_etl_dag_v02',
     default_args=default_args,
-    start_date=datetime(2023, 3, 1),
+    start_date=datetime(2023, 3, 2),
     schedule_interval='@daily'
 ) as dag:
     task1 = KubernetesPodOperator(
@@ -25,7 +25,6 @@ with DAG(
         configmaps=["dev-configmap-accounting-tnanalytics"],
         labels={"foo": "bar"},
         name="test_etl_extract",
-        is_delete_operator_pod=True,
         in_cluster=True,
         task_id="task-one-extract",
         get_logs=True,
@@ -40,7 +39,6 @@ with DAG(
         configmaps=["dev-configmap-accounting-tnanalytics"],
         labels={"foo": "bar"},
         name="test_etl_transform",
-        is_delete_operator_pod=True,
         in_cluster=True,
         task_id="task-two-transform",
         get_logs=True,
